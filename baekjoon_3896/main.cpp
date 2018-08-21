@@ -1,26 +1,27 @@
 #include <iostream>
-#include <string.h>
 using namespace std;
 
-bool n[1300000];
-int t, a, fir, las;
-int main() {
-	memset(n, 1, sizeof(n));
-	n[0] = false; n[1] = false;
-	fir = 2; las = 2;
-	for (long long i = 2; i*i <= 1299709; i++) {
-		if (n[i]) {
-			for (long long j = i * i; j <= 1299709; j += i)
-				n[j] = false;
+bool isPrime(int v) {
+	if (v < 2) return true;
+	else if (v == 2) return false;
+	else if (!(v % 2)) return true;
+	else {
+		for (int i = 3; i*i <= v; i += 2) {	// 앞에서 2에 대해 해줬기 때문
+			if (!(v%i)) return true;
 		}
+		return false;
 	}
+}
+
+int t, f, l, n;
+int main() {
 	cin >> t;
-	for (int i = 0; i < t; i++) {
-		cin >> a;
-		for (int j = a; !n[j]; --j) fir = j;
-		for (int j = a; !n[j]; ++j) las = j;
-		if (n[a]) cout << 0 << endl;
-		else cout << las - fir + 2 << endl;
+	while (t--) {
+		cin >> n;
+		f = n; l = n;
+		while (isPrime(f)) f--;
+		while (isPrime(l)) l++;
+		cout << l - f << endl;
 	}
 	return 0;
 }
